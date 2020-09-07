@@ -3,13 +3,13 @@ pipeline {
   stages {
     stage('Run Test') {
       steps {
-        sh 'mvn clean install'
+        bat label: '', script: 'mvn clean install' 
       }
     }
 
     stage('Complete') {
       steps {
-        sh 'echo \'Success, I guess!\''
+       echo 'Success'
       }
     }
 
