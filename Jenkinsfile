@@ -6,7 +6,18 @@ pipeline {
         bat label: '', script: 'mvn clean install' 
       }
     }
-
+  stage('Archive') 
+        {
+            archiveArtifacts 'target/*.jar'
+        }
+    post 
+    {
+        always 
+        {
+           step([$class: 'JUnitResultArchiver', testResults: 'target/surefire-reports/TEST-*.xml'])
+            step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+        }
+    }
     stage('Complete') {
       steps {
        echo 'Success'
