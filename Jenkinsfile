@@ -1,28 +1,25 @@
 pipeline {
   agent any
   stages {
-    stage('Run Test') {
-      steps {
+    stage('Run Test') 
+    {
+      steps 
+      {
         bat label: '', script: 'mvn clean install' 
       }
     }
-  stage('Archive') 
-        {
-            archiveArtifacts 'target/*.jar'
-        }
-    post 
+    stage('Archive') 
+          {
+              archiveArtifacts 'target/*.jar'
+             step([$class: 'JUnitResultArchiver', testResults: 'target/surefire-reports/TEST-*.xml'])
+              step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+          }
+    stage('Complete') 
     {
-        always 
-        {
-           step([$class: 'JUnitResultArchiver', testResults: 'target/surefire-reports/TEST-*.xml'])
-            step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
-        }
-    }
-    stage('Complete') {
-      steps {
+      steps 
+      {
        echo 'Success'
       }
     }
-
   }
 }
