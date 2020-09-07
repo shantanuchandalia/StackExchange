@@ -5,7 +5,7 @@ pipeline {
     {
       steps 
       {
-        bat label: '', script: 'mvn clean build' 
+        bat label: '', script: 'mvn clean test' 
       }
     }
     stage('Archive') 
