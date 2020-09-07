@@ -10,9 +10,12 @@ pipeline {
     }
     stage('Archive') 
           {
+            steps
+            {
               archiveArtifacts 'target/*.jar'
              step([$class: 'JUnitResultArchiver', testResults: 'target/surefire-reports/TEST-*.xml'])
               step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+            }
           }
     stage('Complete') 
     {
